@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project implements an automated Linux backup solution, which I wrote using bash and it uses rsync, NFS, and a systemd service + timer.
+This project implements an automated Linux backup solution, which I wrote using bash and it uses rsync, NFS, healthchecks.io and a systemd service + timer.
 
 It provides incremental backups, logging, and fully automated execution without manual intervention.
 
@@ -16,6 +16,7 @@ It provides incremental backups, logging, and fully automated execution without 
    - incremental_backups/YYYY-MM-DD/
 3. Logs are saved in /mnt/backup/logs/
 4. systemd timer triggers the backup daily
+5. If it doesn't, healthchecks.io will let us know that it didn't
 
 ---
 
@@ -81,6 +82,7 @@ sudo systemctl status backup.service
 - Timestamp-based backup folders
 - Centralized NFS storage
 - Logging for success and error tracking
+- healthchecks.io alerts if the backup didn't run
 
 ---
 
