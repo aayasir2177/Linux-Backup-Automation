@@ -7,6 +7,7 @@ backup_dest="$backup_mount/current"
 current_date=$(date +%Y-%m-%d)
 log_path="$backup_mount/logs"
 incremental_backups="$backup_mount/incremental_backups/$current_date"
+healthcheck_url="https://hc-ping.com/613dc637-27ec-4fe7-a61c-6817bfbd95a4"
 
 #checking nfs mount
 #if ! mountpoint -q $backup_mount; then 
@@ -28,3 +29,8 @@ rsync \
 	"${backup_dest}" \
 	> "$log_path/backup_${current_date}.log" \
 	2> "$log_path/backup_${current_date}_error.log" 
+
+# alert to healthcheck.io
+if [$? -eq 0] then
+	curl -fsS "$healthcheck_url" > /dev/null 
+fi
